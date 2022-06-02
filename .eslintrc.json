@@ -35,6 +35,7 @@
     "no-unused-vars": "off",
     "import/extensions": "off",
     "import/no-unresolved": "off",
-    "react/button-has-type": "off"
+    "react/button-has-type": "off",
+    "react/jsx-no-bind": "off"
   }
 }

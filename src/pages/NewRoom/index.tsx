@@ -1,21 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { Button } from '../../components/Button';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import letmeaskLogo from '../../assets/images/logo.svg';
-import googleIcon from '../../assets/images/google-icon.svg';
-import logInIcon from '../../assets/images/log-in.svg';
 
 import styles from './styles.module.scss';
 
-export function Home() {
-  const navigate = useNavigate();
-
-  function handleCreateRoom() {
-    navigate('/rooms/new');
-  }
-
+export function NewRoom() {
   return (
     <div className={styles.container}>
       <div className={styles.background}>
@@ -44,24 +36,20 @@ export function Home() {
               src={letmeaskLogo}
               alt="Logo do Letmeask"
             />
-            <Button
-              handleClick={handleCreateRoom}
-              className={styles.googleLogin}
-            >
-              <img src={googleIcon} alt="Logo do Google" />
-              Crie sua sala com o Google
-            </Button>
-            <div className={styles.separator}>ou entre em uma sala</div>
+            <h2 className={styles.formTitle}>Criar uma nova sala</h2>
             <form className={styles.form}>
               <input
                 className={styles.roomCode}
                 type="text"
-                placeholder="Digite o código da sala"
+                placeholder="Nome da sala"
               />
               <Button className={styles.buttonSubmit} type="submit">
-                <img src={logInIcon} alt="Icone de login" />
-                Entrar na sala
+                Criar sala
               </Button>
+              <p>
+                Quer entrar em uma sala existente?&nbsp;
+                <Link to="/">Clique aqui</Link>
+              </p>
             </form>
           </section>
         </main>
