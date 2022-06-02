@@ -5,18 +5,31 @@
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1.2fr;
+
+  .background {
+    width: 100%;
+    height: 100%;
+    &:first-child {
+      background-color: #835AFD;
+    }
+  }
 }
 
 .aside {
   background-color: #835AFD;
   color: #FFFFFF;
+
+  width: 100%;
+  height: 100%;
+  max-width: rem(700);
+  margin-left: auto;
   padding-bottom: 2rem;
 
   .asideWrapper {
     height: 100%;
     max-width: 460px;
     width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 0 auto;
     padding-right: 1rem;
 
     display: flex;
@@ -48,17 +61,25 @@
   }
 }
 
-.authentication {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  gap: 2rem;
+.auth {
+  width: 100%;
+  height: 100%;
+  max-width: rem(800);
+  margin-right: auto;
 
-  width: 90%;
-  max-width: 320px;
-  margin: 0 auto;
-  padding-bottom: 2rem;
+  .authWrapper {
+    width: 90%;
+    max-width: 320px;
+    height: 100%;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 2rem;
+  }
 
   .logo {
     align-self: center;
@@ -73,6 +94,7 @@
   .googleLogin, .buttonSubmit {
     cursor: pointer;
     border: none;
+    padding: 0 rem(32);
   }
 
   .googleLogin {

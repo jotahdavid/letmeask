@@ -8,45 +8,51 @@ import styles from './styles.module.scss';
 export function Home() {
   return (
     <div className={styles.container}>
-      <aside className={styles.aside}>
-        <section className={styles.asideWrapper}>
-          <img
-            className={styles.illustration}
-            src={illustrationImg}
-            alt="Ilustração simbolizando perguntas e respostas"
-          />
-          <strong className={styles.title}>
-            Toda pergunta tem uma resposta.
-          </strong>
-          <p className={styles.subtitle}>
-            Aprenda e compartilhe conhecimento com outras pessoas
-          </p>
-        </section>
-      </aside>
+      <div className={styles.background}>
+        <aside className={styles.aside}>
+          <section className={styles.asideWrapper}>
+            <img
+              className={styles.illustration}
+              src={illustrationImg}
+              alt="Ilustração simbolizando perguntas e respostas"
+            />
+            <strong className={styles.title}>
+              Toda pergunta tem uma resposta.
+            </strong>
+            <p className={styles.subtitle}>
+              Aprenda e compartilhe conhecimento com outras pessoas
+            </p>
+          </section>
+        </aside>
+      </div>
 
-      <main className={styles.authentication}>
-        <img
-          className={styles.logo}
-          src={letmeaskLogo}
-          alt="Logo do Letmeask"
-        />
-        <button className={styles.googleLogin} type="button">
-          <img src={googleIcon} alt="Logo do Google" />
-          Crie sua sala com o Google
-        </button>
-        <div className={styles.separator}>ou entre em uma sala</div>
-        <form className={styles.form}>
-          <input
-            className={styles.roomCode}
-            type="text"
-            placeholder="Digite o código da sala"
-          />
-          <button className={styles.buttonSubmit} type="submit">
-            <img src={logInIcon} alt="Icone de login" />
-            Entrar na sala
-          </button>
-        </form>
-      </main>
+      <div className={styles.background}>
+        <main className={styles.auth}>
+          <section className={styles.authWrapper}>
+            <img
+              className={styles.logo}
+              src={letmeaskLogo}
+              alt="Logo do Letmeask"
+            />
+            <button className={styles.googleLogin} type="button">
+              <img src={googleIcon} alt="Logo do Google" />
+              Crie sua sala com o Google
+            </button>
+            <div className={styles.separator}>ou entre em uma sala</div>
+            <form className={styles.form}>
+              <input
+                className={styles.roomCode}
+                type="text"
+                placeholder="Digite o código da sala"
+              />
+              <button className={styles.buttonSubmit} type="submit">
+                <img src={logInIcon} alt="Icone de login" />
+                Entrar na sala
+              </button>
+            </form>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
