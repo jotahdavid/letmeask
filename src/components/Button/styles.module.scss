@@ -1,0 +1,28 @@
+@import "../../styles/px-to-rem";
+
+.button {
+  cursor: pointer;
+  border: none;
+
+  background-color: #835AFD;
+  color: #FFFFFF;
+  display: flex;
+  gap: 0.5rem;
+
+  align-items: center;
+  justify-content: center;
+  height: rem(50);
+  border-radius: rem(8);
+  padding: 0 rem(32);
+
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+
+  transition: background-color ease 200ms;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

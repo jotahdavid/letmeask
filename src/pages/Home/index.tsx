@@ -5,6 +5,8 @@ import logInIcon from '../../assets/images/log-in.svg';
 
 import styles from './styles.module.scss';
 
+import { Button } from '../../components/Button';
+
 export function Home() {
   return (
     <div className={styles.container}>
@@ -34,10 +36,10 @@ export function Home() {
               src={letmeaskLogo}
               alt="Logo do Letmeask"
             />
-            <button className={styles.googleLogin} type="button">
+            <Button className={styles.googleLogin}>
               <img src={googleIcon} alt="Logo do Google" />
               Crie sua sala com o Google
-            </button>
+            </Button>
             <div className={styles.separator}>ou entre em uma sala</div>
             <form className={styles.form}>
               <input
@@ -45,10 +47,10 @@ export function Home() {
                 type="text"
                 placeholder="Digite o código da sala"
               />
-              <button className={styles.buttonSubmit} type="submit">
+              <Button className={styles.buttonSubmit} type="submit">
                 <img src={logInIcon} alt="Icone de login" />
                 Entrar na sala
-              </button>
+              </Button>
             </form>
           </section>
         </main>

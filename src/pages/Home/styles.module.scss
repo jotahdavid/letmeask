@@ -100,21 +100,7 @@
   .googleLogin {
     background-color: #EA4335;
     color: #FEFEFE;
-    display: flex;
-    gap: 0.5rem;
-
-    align-items: center;
-    justify-content: center;
-    height: rem(50);
-    border-radius: rem(8);
-
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-
-    transition: background-color ease 200ms;
-
-    &:hover {
+    &:not(:disabled):hover {
       background-color: #e72614;
     }
   }
@@ -165,23 +151,7 @@
   }
 
   .buttonSubmit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    height: rem(50);
-
-    font-family: "Roboto", sans-serif;
-    font-weight: 500;
-    font-size: 1rem;
-    color: #F8F8F8;
-
-    background-color: #835AFD;
-    border-radius: 0.5rem;
-
-    transition: background-color ease 200ms;
-
-    &:hover {
+    &:not(:disabled):hover {
       background-color: #6F4BD8;
     }
   }
