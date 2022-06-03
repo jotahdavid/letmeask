@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
 
 import illustrationImg from '../../assets/images/illustration.svg';
@@ -8,6 +10,13 @@ import letmeaskLogo from '../../assets/images/logo.svg';
 import styles from './styles.module.scss';
 
 export function NewRoom() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) navigate('/');
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.background}>
@@ -37,7 +46,10 @@ export function NewRoom() {
               alt="Logo do Letmeask"
             />
             <h2 className={styles.formTitle}>Criar uma nova sala</h2>
-            <form className={styles.form}>
+            <form
+              onSubmit={(event) => event.preventDefault()}
+              className={styles.form}
+            >
               <input
                 className={styles.roomCode}
                 type="text"

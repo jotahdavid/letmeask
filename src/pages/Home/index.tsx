@@ -1,19 +1,29 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import letmeaskLogo from '../../assets/images/logo.svg';
 import googleIcon from '../../assets/images/google-icon.svg';
 import logInIcon from '../../assets/images/log-in.svg';
-
 import styles from './styles.module.scss';
 
 export function Home() {
   const navigate = useNavigate();
+  const { user, signInWithGoogle } = useAuth();
 
-  function handleCreateRoom() {
-    navigate('/rooms/new');
+  async function handleCreateRoom() {
+    try {
+      if (!user) {
+        await signInWithGoogle();
+      }
+
+      navigate('/rooms/new');
+    } catch (err) {
+      console.error('Falha na autenticação!');
+    }
   }
 
   return (
@@ -52,7 +62,10 @@ export function Home() {
               Crie sua sala com o Google
             </Button>
             <div className={styles.separator}>ou entre em uma sala</div>
-            <form className={styles.form}>
+            <form
+              onSubmit={(event) => event.preventDefault()}
+              className={styles.form}
+            >
               <input
                 className={styles.roomCode}
                 type="text"
