@@ -1,21 +1,38 @@
-import { useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { push, ref } from 'firebase/database';
+import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import letmeaskLogo from '../../assets/images/logo.svg';
-
 import styles from './styles.module.scss';
 
 export function NewRoom() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+  const [newRoom, setNewRoom] = useState('');
+
   useEffect(() => {
     if (!user) navigate('/');
   }, []);
+
+  async function handleNewRoom(event: FormEvent) {
+    event.preventDefault();
+
+    if (newRoom.trim() === '') return;
+
+    const roomRef = ref(database, 'rooms');
+    const roomId = await push(roomRef, {
+      title: newRoom,
+      authorId: user?.id,
+    });
+
+    navigate(`/rooms/${roomId.key}`);
+  }
 
   return (
     <div className={styles.container}>
@@ -46,14 +63,13 @@ export function NewRoom() {
               alt="Logo do Letmeask"
             />
             <h2 className={styles.formTitle}>Criar uma nova sala</h2>
-            <form
-              onSubmit={(event) => event.preventDefault()}
-              className={styles.form}
-            >
+            <form onSubmit={handleNewRoom} className={styles.form}>
               <input
                 className={styles.roomCode}
                 type="text"
                 placeholder="Nome da sala"
+                onChange={(event) => setNewRoom(event.target.value)}
+                value={newRoom}
               />
               <Button className={styles.buttonSubmit} type="submit">
                 Criar sala

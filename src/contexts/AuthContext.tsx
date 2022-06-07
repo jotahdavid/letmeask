@@ -45,9 +45,6 @@ export function AuthContextProvider({ children }: AuthContextProviderType) {
             avatar: photoURL,
           });
         }
-      },
-      (err) => {
-        console.error(err);
       }
     );
 

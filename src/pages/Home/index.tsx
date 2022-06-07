@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { get, ref } from 'firebase/database';
+import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
@@ -14,6 +17,9 @@ export function Home() {
   const navigate = useNavigate();
   const { user, signInWithGoogle } = useAuth();
 
+  const [roomCode, setRoomCode] = useState('');
+  const [roomExists, setRoomExists] = useState(true);
+
   async function handleCreateRoom() {
     try {
       if (!user) {
@@ -24,6 +30,21 @@ export function Home() {
     } catch (err) {
       console.error('Falha na autenticação!');
     }
+  }
+
+  async function handleEnterRoom(event: FormEvent) {
+    event.preventDefault();
+
+    if (roomCode.trim() === '') return;
+
+    const room = await get(ref(database, `rooms/${roomCode}`));
+
+    if (!room.exists()) {
+      setRoomExists(false);
+      return;
+    }
+
+    navigate(`/rooms/${roomCode}`);
   }
 
   return (
@@ -62,14 +83,20 @@ export function Home() {
               Crie sua sala com o Google
             </Button>
             <div className={styles.separator}>ou entre em uma sala</div>
-            <form
-              onSubmit={(event) => event.preventDefault()}
-              className={styles.form}
-            >
+            <form onSubmit={handleEnterRoom} className={styles.form}>
+              {!roomExists && (
+                <p className={styles.messageError}>Sala não encontrada!</p>
+              )}
               <input
-                className={styles.roomCode}
+                className={`${styles.roomCode} ${
+                  !roomExists ? styles.inputError : ''
+                }`}
                 type="text"
                 placeholder="Digite o código da sala"
+                onChange={(event) => {
+                  setRoomCode(event.target.value);
+                  setRoomExists(true);
+                }}
               />
               <Button className={styles.buttonSubmit} type="submit">
                 <img src={logInIcon} alt="Icone de login" />

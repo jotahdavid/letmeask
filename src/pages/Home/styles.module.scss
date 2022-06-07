@@ -156,3 +156,14 @@
     }
   }
 }
+
+.inputError {
+  border: 2px solid #EA4335 !important;
+}
+
+.messageError {
+  color: red;
+  font-size: rem(14);
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
