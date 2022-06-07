@@ -6,6 +6,7 @@ import { database } from '../../services/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
 import { RoomCode } from '../../components/RoomCode';
+import { LikeIcon } from '../../components/Icons';
 
 import letmeaskLogo from '../../assets/images/logo.svg';
 import avatarIcon from '../../assets/images/avatar.svg';
@@ -112,7 +113,12 @@ export function Room() {
 
         <ul className={styles.questions}>
           {questions.map(({ id, content, author }) => (
-            <Question key={id} content={content} author={author} />
+            <Question key={id} content={content} author={author}>
+              <button className={styles.like}>
+                <span>10</span>
+                <LikeIcon />
+              </button>
+            </Question>
           ))}
         </ul>
       </main>

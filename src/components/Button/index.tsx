@@ -2,22 +2,25 @@ import { ButtonHTMLAttributes } from 'react';
 
 import styles from './styles.module.scss';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   handleClick?: () => void;
+  outlined?: boolean;
   className?: string;
-  type?: 'submit' | 'reset' | 'button';
-}
+};
 
 export function Button({
   type,
   children,
   className,
   handleClick,
+  outlined,
 }: ButtonProps) {
   return (
     <button
       onClick={handleClick}
-      className={`${styles.button} ${className}`}
+      className={`${styles.button} ${className} ${
+        outlined ? styles.outlined : ''
+      }`}
       type={type}
     >
       {children}
@@ -27,6 +30,6 @@ export function Button({
 
 Button.defaultProps = {
   handleClick: () => {},
-  type: 'button',
+  outlined: false,
   className: '',
 };

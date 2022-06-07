@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import likeIcon from '../../assets/images/like.svg';
 import styles from './styles.module.scss';
 
@@ -7,9 +8,10 @@ type QuestionProps = {
     name: string;
     avatar: string;
   };
+  children: ReactNode;
 };
 
-export function Question({ content, author }: QuestionProps) {
+export function Question({ content, author, children }: QuestionProps) {
   return (
     <li className={styles.question}>
       <section>
@@ -26,9 +28,7 @@ export function Question({ content, author }: QuestionProps) {
           />
           <span className={styles.userInfo__name}>{author.name}</span>
         </div>
-        <div className={styles.question__cta}>
-          <img src={likeIcon} alt="Mão dando joinha" />
-        </div>
+        <div className={styles.question__cta}>{children}</div>
       </footer>
     </li>
   );

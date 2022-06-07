@@ -24,9 +24,8 @@
   }
 
   &__cta {
-    img {
-      cursor: pointer;
-    }
+    display: flex;
+    gap: rem(12);
   }
 }
 
