@@ -1,0 +1,49 @@
+@import "../../styles/_px-to-rem.scss";
+
+.button {
+  border: none;
+  background-color: #fff;
+  border-radius: rem(8);
+  border: 2px solid #835AFD;
+  overflow: hidden;
+  cursor: pointer;
+
+  height: rem(40);
+  display: flex;
+  align-items: center;
+
+  transition: border-color 200ms ease;
+
+  div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #835AFD;
+    padding: 0 rem(12);
+
+    transition: background-color 200ms ease;
+  }
+
+  &:hover {
+    border-color: #6F4BD8;
+  }
+  &:hover div {
+    background-color: #6F4BD8;;
+  }
+
+  img {
+    display: block;
+    width: rem(20);
+    height: rem(20);
+  }
+
+  span {
+    align-self: center;
+    flex: 1;
+    padding: 0 1rem;
+
+    font-size: rem(14);
+    font-weight: 500;
+  }
+}

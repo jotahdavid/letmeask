@@ -1,1 +1,129 @@
 @import "../../styles/_px-to-rem.scss";
+
+.header {
+  width: 100%;
+  height: rem(90);
+  border-bottom: 2px solid #E2E2E2;
+  display: flex;
+  align-items: center;
+
+  > .header__content {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    width: rem(100);
+  }
+}
+
+.main {
+  max-width: 800px;
+  margin: rem(64) auto 0 auto;
+
+  .main__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .roomName {
+    color: #29292E;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: rem(24);
+    line-height: rem(36);
+  }
+
+  .questionCount {
+    display: flex;
+    align-items: center;
+
+    background-color: #E559F9;
+    height: rem(32);
+    padding: 0 rem(16);
+    border-radius: rem(50);
+
+    font-size: rem(14);
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    color: #F8F8F8;
+  }
+
+  .form__questionInput {
+    margin: rem(24) 0 rem(16) 0;
+
+    width: 100%;
+    height: rem(140);
+    background-color: #FEFEFE;
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+
+    resize: none;
+    border: none;
+    border-radius: rem(8);
+
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+
+    &:focus, &:focus-within {
+      outline: none;
+      outline: 2px solid #835AFD;
+    }
+
+    &::placeholder {
+      color: #737380;
+    }
+  }
+
+  .form__footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .form__text {
+    font-size: rem(14);
+    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+    line-height: 1rem;
+    color: #737380;
+  }
+
+  .form__login {
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: #835AFD;
+    cursor: pointer;
+
+    transition: color 200ms ease;
+
+    &:hover {
+      color: #5e29ff;
+    }
+  }
+
+  .form__submit {
+    &:not(:disabled):hover {
+      background-color: #6F4BD8;
+    }
+  }
+
+  .questions {
+    margin-top: rem(32);
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: rem(14);
+    color: #737380;
+  }
+}
+
