@@ -1,6 +1,6 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { push, ref, onValue } from 'firebase/database';
+import { push, ref } from 'firebase/database';
 import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -11,66 +11,19 @@ import letmeaskLogo from '../../assets/images/logo.svg';
 import avatarIcon from '../../assets/images/avatar.svg';
 import styles from './styles.module.scss';
 import { Question } from '../../components/Question';
+import { useRoom } from '../../hooks/useRoom';
 
 type RoomParams = {
   id: string;
-};
-
-type FirebaseQuestions = Record<
-  string,
-  {
-    author: {
-      name: string;
-      avatar: string;
-    };
-    content: string;
-    isHighlighted: boolean;
-    isAnswered: boolean;
-  }
->;
-
-type QuestionType = {
-  id: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
-  content: string;
-  isHighlighted: boolean;
-  isAnswered: boolean;
 };
 
 export function Room() {
   const { user } = useAuth();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
-  const [roomTitle, setRoomTitle] = useState('');
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
 
   const roomId = params.id;
-
-  useEffect(() => {
-    const roomRef = ref(database, `rooms/${roomId}`);
-
-    const unsubscribe = onValue(roomRef, (room) => {
-      const roomData = room.val();
-      const firebaseQuestions = roomData.questions as FirebaseQuestions;
-
-      const parsedQuestions = Object.entries(firebaseQuestions).map(
-        ([key, value]) => ({
-          ...value,
-          id: key,
-        })
-      );
-
-      setRoomTitle(roomData.title);
-      setQuestions(parsedQuestions);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [roomId]);
+  const { questions, roomTitle } = useRoom(roomId!);
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
