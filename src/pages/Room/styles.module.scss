@@ -102,7 +102,6 @@
     display: flex;
     align-items: center;
     gap: rem(8);
-
   }
 
   .userInfo__avatar {
@@ -140,15 +139,13 @@
     }
   }
 
-  .questions {
-    margin-top: rem(32);
-    font-family: "Poppins", sans-serif;
-    font-size: rem(16);
-    color: #737380;
+  .divider {
+    margin: 2rem 0;
+    color: rgba(226, 226, 226, 0.2);
+  }
 
-    p:not(:first-child) {
-      margin-top: rem(16);
-    }
+  .questions {
+    padding-bottom: rem(40);
   }
 }
 

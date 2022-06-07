@@ -1,0 +1,51 @@
+@import "../../styles/_px-to-rem.scss";
+
+.question {
+  background-color: #fefefe;
+  padding: rem(24);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+
+  &:not(:first-child) {
+    margin-top: rem(8);
+  }
+
+  &__content {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    color: #29292E;
+    line-height: rem(24);
+  }
+
+  &__footer {
+    margin-top: rem(24);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__cta {
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: rem(8);
+
+  &__avatar {
+    border-radius: 50%;
+    width: rem(32);
+    height: rem(32);
+  }
+
+  &__name {
+    font-size: rem(14);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    line-height: 1rem;
+    color: #737380;
+  }
+}

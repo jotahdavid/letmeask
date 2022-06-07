@@ -10,6 +10,7 @@ import { RoomCode } from '../../components/RoomCode';
 import letmeaskLogo from '../../assets/images/logo.svg';
 import avatarIcon from '../../assets/images/avatar.svg';
 import styles from './styles.module.scss';
+import { Question } from '../../components/Question';
 
 type RoomParams = {
   id: string;
@@ -28,7 +29,7 @@ type FirebaseQuestions = Record<
   }
 >;
 
-type Question = {
+type QuestionType = {
   id: string;
   author: {
     name: string;
@@ -44,7 +45,7 @@ export function Room() {
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
   const [roomTitle, setRoomTitle] = useState('');
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
 
   const roomId = params.id;
 
@@ -104,7 +105,7 @@ export function Room() {
             <img
               className={styles.logo}
               src={letmeaskLogo}
-              alt="Letmeask logo"
+              alt="Logo do Letmeask"
             />
           </Link>
           <RoomCode code={roomId!} />
@@ -154,9 +155,11 @@ export function Room() {
           </div>
         </form>
 
+        <hr className={styles.divider} />
+
         <ul className={styles.questions}>
-          {questions.map((item) => (
-            <p key={item.id}>{item.content}</p>
+          {questions.map(({ id, content, author }) => (
+            <Question key={id} content={content} author={author} />
           ))}
         </ul>
       </main>
