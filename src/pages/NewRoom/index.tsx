@@ -25,9 +25,9 @@ export function NewRoom() {
 
     if (newRoom.trim() === '') return;
 
-    const roomRef = ref(database, 'rooms');
+    const roomRef = await ref(database, 'rooms');
     const roomId = await push(roomRef, {
-      title: newRoom,
+      title: newRoom.trim(),
       authorId: user?.id,
     });
 

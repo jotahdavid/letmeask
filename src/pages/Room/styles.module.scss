@@ -51,7 +51,8 @@
 
     font-size: rem(14);
     font-family: "Roboto", sans-serif;
-    font-weight: 500;
+    font-weight: 700;
+    line-height: 1rem;
     color: #F8F8F8;
   }
 
@@ -97,6 +98,27 @@
     color: #737380;
   }
 
+  .userInfo {
+    display: flex;
+    align-items: center;
+    gap: rem(8);
+
+  }
+
+  .userInfo__avatar {
+    border-radius: 50%;
+    width: rem(32);
+    height: rem(32);
+  }
+
+  .userInfo__name {
+    font-size: rem(14);
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    line-height: 1rem;
+    color: #29292E;
+  }
+
   .form__login {
     border: none;
     background-color: transparent;
@@ -120,10 +142,13 @@
 
   .questions {
     margin-top: rem(32);
-    text-align: center;
     font-family: "Poppins", sans-serif;
-    font-size: rem(14);
+    font-size: rem(16);
     color: #737380;
+
+    p:not(:first-child) {
+      margin-top: rem(16);
+    }
   }
 }
 
