@@ -22,6 +22,8 @@
     background-color: #835AFD;
     padding: 0 rem(12);
 
+    color: #29292E;
+
     transition: background-color 200ms ease;
   }
 
@@ -43,6 +45,7 @@
     flex: 1;
     padding: 0 1rem;
 
+    font-family: "Roboto", sans-serif;
     font-size: rem(14);
     font-weight: 500;
   }
