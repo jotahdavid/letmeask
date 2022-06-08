@@ -1,15 +1,15 @@
 import { Link, useParams } from 'react-router-dom';
-import { ref, remove } from 'firebase/database';
+import { get, ref, remove, update } from 'firebase/database';
 import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
+import { useRoom } from '../../hooks/useRoom';
 import { Button } from '../../components/Button';
 import { RoomCode } from '../../components/RoomCode';
+import { Question } from '../../components/Question';
 
 import letmeaskLogo from '../../assets/images/logo.svg';
 import styles from './styles.module.scss';
-import { Question } from '../../components/Question';
-import { useRoom } from '../../hooks/useRoom';
 import { AnswerIcon, CheckIcon, DeleteIcon } from '../../components/Icons';
 
 type RoomParams = {
@@ -24,6 +24,7 @@ export function AdminRoom() {
   const { questions, roomTitle } = useRoom(roomId!);
 
   async function handleDeleteQuestion(questionId: string) {
+    // TODO: change confirm window to a Modal
     const confirmResult = window.confirm(
       'Tem certeza que você deseja excluir esta pergunta?'
     );
@@ -31,6 +32,25 @@ export function AdminRoom() {
     if (!confirmResult) return;
 
     await remove(ref(database, `rooms/${roomId}/questions/${questionId}`));
+  }
+
+  async function handleCheckQuestionAsAnswered(questionId: string) {
+    await update(ref(database, `rooms/${roomId}/questions/${questionId}`), {
+      isAnswered: true,
+    });
+  }
+
+  async function handleHighlightQuestion(questionId: string) {
+    const questionRef = await ref(
+      database,
+      `rooms/${roomId}/questions/${questionId}`
+    );
+
+    const question = (await get(questionRef)).val();
+
+    await update(questionRef, {
+      isHighlighted: !question.isHighlighted,
+    });
   }
 
   return (
@@ -65,22 +85,45 @@ export function AdminRoom() {
         <hr className={styles.divider} />
 
         <ul className={styles.questions}>
-          {questions.map(({ id, content, author }) => (
-            <Question key={id} content={content} author={author}>
-              <button className={styles.question__cta}>
-                <CheckIcon />
-              </button>
-              <button className={styles.question__cta}>
-                <AnswerIcon />
-              </button>
-              <button
-                className={`${styles.question__cta} ${styles.question__delete}`}
-                onClick={() => handleDeleteQuestion(id)}
+          {questions.map(
+            ({ id, content, author, isHighlighted, isAnswered }) => (
+              <Question
+                key={id}
+                content={content}
+                author={author}
+                isHighlighted={isHighlighted}
+                isAnswered={isAnswered}
               >
-                <DeleteIcon />
-              </button>
-            </Question>
-          ))}
+                {!isAnswered && (
+                  <>
+                    <button
+                      className={`${styles.question__cta} ${
+                        isAnswered ? styles.active : ''
+                      }`}
+                      onClick={() => handleCheckQuestionAsAnswered(id)}
+                    >
+                      <CheckIcon />
+                    </button>
+                    <button
+                      className={`${styles.question__cta} ${
+                        isHighlighted && !isAnswered ? styles.active : ''
+                      }`}
+                      onClick={() => handleHighlightQuestion(id)}
+                    >
+                      <AnswerIcon />
+                    </button>
+                  </>
+                )}
+
+                <button
+                  className={`${styles.question__cta} ${styles.question__delete}`}
+                  onClick={() => handleDeleteQuestion(id)}
+                >
+                  <DeleteIcon />
+                </button>
+              </Question>
+            )
+          )}
         </ul>
       </main>
     </>

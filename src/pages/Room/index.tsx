@@ -135,17 +135,35 @@ export function Room() {
         <hr className={styles.divider} />
 
         <ul className={styles.questions}>
-          {questions.map(({ id, content, author, likeCount, likeId }) => (
-            <Question key={id} content={content} author={author}>
-              <button
-                className={`${styles.like} ${likeId ? styles.liked : ''}`}
-                onClick={() => handleLikeQuestion(id)}
+          {questions.map(
+            ({
+              id,
+              content,
+              author,
+              isHighlighted,
+              isAnswered,
+              likeCount,
+              likeId,
+            }) => (
+              <Question
+                key={id}
+                content={content}
+                author={author}
+                isHighlighted={isHighlighted}
+                isAnswered={isAnswered}
               >
-                {likeCount > 0 && <span>{likeCount}</span>}
-                <LikeIcon />
-              </button>
-            </Question>
-          ))}
+                {!isAnswered && (
+                  <button
+                    className={`${styles.like} ${likeId ? styles.liked : ''}`}
+                    onClick={() => handleLikeQuestion(id)}
+                  >
+                    {likeCount > 0 && <span>{likeCount}</span>}
+                    <LikeIcon />
+                  </button>
+                )}
+              </Question>
+            )
+          )}
         </ul>
       </main>
     </>

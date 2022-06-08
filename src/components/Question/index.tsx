@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import likeIcon from '../../assets/images/like.svg';
 import styles from './styles.module.scss';
 
 type QuestionProps = {
@@ -8,12 +7,26 @@ type QuestionProps = {
     name: string;
     avatar: string;
   };
-  children: ReactNode;
+  isHighlighted?: boolean;
+  isAnswered?: boolean;
+  children?: ReactNode;
 };
 
-export function Question({ content, author, children }: QuestionProps) {
+export function Question({
+  content,
+  author,
+  isHighlighted,
+  isAnswered,
+  children,
+}: QuestionProps) {
   return (
-    <li className={styles.question}>
+    <li
+      className={`
+        ${styles.question}
+        ${isHighlighted && !isAnswered ? styles.isHighlighted : ''}
+        ${isAnswered ? styles.isAnswered : ''}
+      `}
+    >
       <section>
         <p className={styles.question__content}>{content}</p>
       </section>
@@ -33,3 +46,9 @@ export function Question({ content, author, children }: QuestionProps) {
     </li>
   );
 }
+
+Question.defaultProps = {
+  isHighlighted: false,
+  isAnswered: false,
+  children: '',
+};

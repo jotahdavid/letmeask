@@ -75,7 +75,8 @@
 
 .divider {
   margin: 2rem 0;
-  color: rgba(226, 226, 226, 0.2);
+  opacity: 0.5;
+  color: rgba(226, 226, 226, 0.5);
 }
 
 .questions {
@@ -88,10 +89,14 @@
   background-color: transparent;
 
   &:hover path, &:hover circle {
-    stroke: #835AFD;
+    stroke: #9e7eff;
   }
 
   &.question__delete:hover path {
     stroke: #E73F5D;
+  }
+
+  &.active path, &.active circle {
+    stroke: #835AFD;
   }
 }
