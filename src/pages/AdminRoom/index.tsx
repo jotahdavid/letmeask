@@ -1,7 +1,4 @@
-import { FormEvent, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { push, ref } from 'firebase/database';
-import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
@@ -18,7 +15,7 @@ type RoomParams = {
 };
 
 export function AdminRoom() {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const params = useParams<RoomParams>();
 
   const roomId = params.id;

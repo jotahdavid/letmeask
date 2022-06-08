@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { push, ref } from 'firebase/database';
+import { push, ref, remove } from 'firebase/database';
 import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -49,6 +49,29 @@ export function Room() {
     await push(questionsRef, question);
 
     setNewQuestion('');
+  }
+
+  async function handleLikeQuestion(questionId: string) {
+    const questionLiked = questions.find(
+      (question) => question.likeId && question.id === questionId
+    );
+
+    if (questionLiked) {
+      const like = await ref(
+        database,
+        `rooms/${roomId}/questions/${questionId}/likes/${questionLiked.likeId}`
+      );
+      await remove(like);
+      return;
+    }
+
+    const newLike = await ref(
+      database,
+      `rooms/${roomId}/questions/${questionId}/likes`
+    );
+    await push(newLike, {
+      authorId: user?.id,
+    });
   }
 
   return (
@@ -112,10 +135,13 @@ export function Room() {
         <hr className={styles.divider} />
 
         <ul className={styles.questions}>
-          {questions.map(({ id, content, author }) => (
+          {questions.map(({ id, content, author, likeCount, likeId }) => (
             <Question key={id} content={content} author={author}>
-              <button className={styles.like}>
-                <span>10</span>
+              <button
+                className={`${styles.like} ${likeId ? styles.liked : ''}`}
+                onClick={() => handleLikeQuestion(id)}
+              >
+                {likeCount > 0 && <span>{likeCount}</span>}
                 <LikeIcon />
               </button>
             </Question>
