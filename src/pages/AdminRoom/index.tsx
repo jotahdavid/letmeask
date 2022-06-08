@@ -9,6 +9,7 @@ import { RoomCode } from '../../components/RoomCode';
 import { Question } from '../../components/Question';
 
 import letmeaskLogo from '../../assets/images/logo.svg';
+import emptyQuestionIllustration from '../../assets/images/empty-questions.svg';
 import styles from './styles.module.scss';
 import { AnswerIcon, CheckIcon, DeleteIcon } from '../../components/Icons';
 
@@ -83,44 +84,58 @@ export function AdminRoom() {
         </div>
 
         <ul className={styles.questions}>
-          {questions.map(
-            ({ id, content, author, isHighlighted, isAnswered }) => (
-              <Question
-                key={id}
-                content={content}
-                author={author}
-                isHighlighted={isHighlighted}
-                isAnswered={isAnswered}
-              >
-                {!isAnswered && (
-                  <>
-                    <button
-                      className={`${styles.question__cta} ${
-                        isAnswered ? styles.active : ''
-                      }`}
-                      onClick={() => handleCheckQuestionAsAnswered(id)}
-                    >
-                      <CheckIcon />
-                    </button>
-                    <button
-                      className={`${styles.question__cta} ${
-                        isHighlighted && !isAnswered ? styles.active : ''
-                      }`}
-                      onClick={() => handleHighlightQuestion(id)}
-                    >
-                      <AnswerIcon />
-                    </button>
-                  </>
-                )}
-
-                <button
-                  className={`${styles.question__cta} ${styles.question__delete}`}
-                  onClick={() => handleDeleteQuestion(id)}
+          {questions.length > 0 ? (
+            questions.map(
+              ({ id, content, author, isHighlighted, isAnswered }) => (
+                <Question
+                  key={id}
+                  content={content}
+                  author={author}
+                  isHighlighted={isHighlighted}
+                  isAnswered={isAnswered}
                 >
-                  <DeleteIcon />
-                </button>
-              </Question>
+                  {!isAnswered && (
+                    <>
+                      <button
+                        className={`${styles.question__cta} ${
+                          isAnswered ? styles.active : ''
+                        }`}
+                        onClick={() => handleCheckQuestionAsAnswered(id)}
+                      >
+                        <CheckIcon />
+                      </button>
+                      <button
+                        className={`${styles.question__cta} ${
+                          isHighlighted && !isAnswered ? styles.active : ''
+                        }`}
+                        onClick={() => handleHighlightQuestion(id)}
+                      >
+                        <AnswerIcon />
+                      </button>
+                    </>
+                  )}
+
+                  <button
+                    className={`${styles.question__cta} ${styles.question__delete}`}
+                    onClick={() => handleDeleteQuestion(id)}
+                  >
+                    <DeleteIcon />
+                  </button>
+                </Question>
+              )
             )
+          ) : (
+            <div className={styles.questions__empty}>
+              <img
+                src={emptyQuestionIllustration}
+                alt="Ilustração com balões de falas"
+              />
+              <h2>Nenhuma pergunta por aqui...</h2>
+              <p>
+                Envie o código desta sala para seus amigos e comece a responder
+                perguntas!
+              </p>
+            </div>
           )}
         </ul>
       </main>

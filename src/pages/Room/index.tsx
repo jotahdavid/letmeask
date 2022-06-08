@@ -10,6 +10,7 @@ import { LikeIcon } from '../../components/Icons';
 
 import letmeaskLogo from '../../assets/images/logo.svg';
 import avatarIcon from '../../assets/images/avatar.svg';
+import emptyQuestionIllustration from '../../assets/images/empty-questions.svg';
 import styles from './styles.module.scss';
 import { Question } from '../../components/Question';
 import { useRoom } from '../../hooks/useRoom';
@@ -132,37 +133,50 @@ export function Room() {
           </div>
         </form>
 
-        <hr className={styles.divider} />
-
         <ul className={styles.questions}>
-          {questions.map(
-            ({
-              id,
-              content,
-              author,
-              isHighlighted,
-              isAnswered,
-              likeCount,
-              likeId,
-            }) => (
-              <Question
-                key={id}
-                content={content}
-                author={author}
-                isHighlighted={isHighlighted}
-                isAnswered={isAnswered}
-              >
-                {!isAnswered && (
-                  <button
-                    className={`${styles.like} ${likeId ? styles.liked : ''}`}
-                    onClick={() => handleLikeQuestion(id)}
-                  >
-                    {likeCount > 0 && <span>{likeCount}</span>}
-                    <LikeIcon />
-                  </button>
-                )}
-              </Question>
+          {questions.length > 0 ? (
+            questions.map(
+              ({
+                id,
+                content,
+                author,
+                isHighlighted,
+                isAnswered,
+                likeCount,
+                likeId,
+              }) => (
+                <Question
+                  key={id}
+                  content={content}
+                  author={author}
+                  isHighlighted={isHighlighted}
+                  isAnswered={isAnswered}
+                >
+                  {!isAnswered && (
+                    <button
+                      className={`${styles.like} ${likeId ? styles.liked : ''}`}
+                      onClick={() => handleLikeQuestion(id)}
+                    >
+                      {likeCount > 0 && <span>{likeCount}</span>}
+                      <LikeIcon />
+                    </button>
+                  )}
+                </Question>
+              )
             )
+          ) : (
+            <div className={styles.questions__empty}>
+              <img
+                src={emptyQuestionIllustration}
+                alt="Ilustração com balões de falas"
+              />
+              <h2>Nenhuma pergunta por aqui...</h2>
+              <p>
+                {!user
+                  ? 'Faça o seu login e seja a primeira pessoa a fazer uma pergunta!'
+                  : 'Seja a primeira pessoa a fazer uma pergunta!'}
+              </p>
+            </div>
           )}
         </ul>
       </main>

@@ -76,6 +76,40 @@
 .questions {
   margin-top: 2.5rem;
   padding-bottom: rem(40);
+
+  &__empty {
+    width: 90%;
+    max-width: rem(280);
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+      width: rem(150);
+      height: rem(150);
+    }
+
+    h2 {
+      margin-top: 1rem;
+      font-family: "Roboto", sans-serif;
+      font-size: rem(18);
+      font-weight: 600;
+      color: #29292E;
+      text-align: center;
+    }
+
+    p {
+      margin-top: 0.5rem;
+      font-family: "Roboto", sans-serif;
+      font-size: rem(14);
+      font-weight: 400;
+      color: #737380;
+      text-align: center;
+      line-height: rem(22);
+    }
+  }
 }
 
 .question__cta {
