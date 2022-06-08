@@ -82,8 +82,6 @@ export function AdminRoom() {
           )}
         </div>
 
-        <hr className={styles.divider} />
-
         <ul className={styles.questions}>
           {questions.map(
             ({ id, content, author, isHighlighted, isAnswered }) => (
