@@ -1,4 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
+import { ref, remove } from 'firebase/database';
+import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
@@ -20,6 +22,16 @@ export function AdminRoom() {
 
   const roomId = params.id;
   const { questions, roomTitle } = useRoom(roomId!);
+
+  async function handleDeleteQuestion(questionId: string) {
+    const confirmResult = window.confirm(
+      'Tem certeza que você deseja excluir esta pergunta?'
+    );
+
+    if (!confirmResult) return;
+
+    await remove(ref(database, `rooms/${roomId}/questions/${questionId}`));
+  }
 
   return (
     <>
@@ -63,6 +75,7 @@ export function AdminRoom() {
               </button>
               <button
                 className={`${styles.question__cta} ${styles.question__delete}`}
+                onClick={() => handleDeleteQuestion(id)}
               >
                 <DeleteIcon />
               </button>
