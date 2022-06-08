@@ -3,26 +3,28 @@ import { onValue, ref } from 'firebase/database';
 import { database } from '../services/firebase';
 import { useAuth } from './useAuth';
 
-type FirebaseQuestions = Record<
-  string,
-  {
-    author: {
-      name: string;
-      avatar: string;
-    };
-    content: string;
-    isHighlighted: boolean;
-    isAnswered: boolean;
-    likes:
-      | Record<
-          string,
-          {
-            authorId: string;
-          }
-        >
-      | undefined;
-  }
->;
+type FirebaseQuestions =
+  | Record<
+      string,
+      {
+        author: {
+          name: string;
+          avatar: string;
+        };
+        content: string;
+        isHighlighted: boolean;
+        isAnswered: boolean;
+        likes:
+          | Record<
+              string,
+              {
+                authorId: string;
+              }
+            >
+          | undefined;
+      }
+    >
+  | undefined;
 
 type QuestionType = {
   id: string;
@@ -49,7 +51,7 @@ export function useRoom(roomId: string) {
       const roomData = room.val();
       const firebaseQuestions = roomData.questions as FirebaseQuestions;
 
-      const parsedQuestions = Object.entries(firebaseQuestions).map(
+      const parsedQuestions = Object.entries(firebaseQuestions ?? {}).map(
         ([key, { likes, ...value }]) => {
           const questionLikes = Object.entries(likes ?? {});
           const [likeId] =
