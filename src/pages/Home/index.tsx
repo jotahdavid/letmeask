@@ -1,11 +1,13 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+import toast from 'react-hot-toast';
 import { get, ref } from 'firebase/database';
 import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../../components/Button';
+import { ToasterStylized } from '../../components/ToasterStylized';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import letmeaskLogo from '../../assets/images/logo.svg';
@@ -28,7 +30,7 @@ export function Home() {
 
       navigate('/rooms/new');
     } catch (err) {
-      console.error('Falha na autenticação!');
+      toast.error('Falha na autenticação!');
     }
   }
 
@@ -49,6 +51,8 @@ export function Home() {
 
   return (
     <div className={styles.container}>
+      <ToasterStylized />
+
       <div className={styles.background}>
         <aside className={styles.aside}>
           <section className={styles.asideWrapper}>
@@ -98,7 +102,11 @@ export function Home() {
                   setRoomExists(true);
                 }}
               />
-              <Button className={styles.buttonSubmit} type="submit">
+              <Button
+                className={styles.buttonSubmit}
+                type="submit"
+                disabled={roomCode.length === 0}
+              >
                 <img src={logInIcon} alt="Icone de login" />
                 Entrar na sala
               </Button>

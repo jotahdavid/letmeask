@@ -1,3 +1,7 @@
+import toast from 'react-hot-toast';
+
+import { ToasterStylized } from '../ToasterStylized';
+
 import copyIcon from '../../assets/images/copy.svg';
 import styles from './styles.module.scss';
 
@@ -8,14 +12,21 @@ type RoomCodeProps = {
 export function RoomCode({ code }: RoomCodeProps) {
   async function copyRoomCodeToClipboard() {
     await navigator.clipboard.writeText(code);
+    toast.success('Código copiado!', {
+      icon: '📋',
+    });
   }
 
   return (
-    <button className={styles.button} onClick={copyRoomCodeToClipboard}>
-      <div>
-        <img src={copyIcon} alt="Ícone de copiar" />
-      </div>
-      <span>Sala #{code}</span>
-    </button>
+    <>
+      <ToasterStylized />
+
+      <button className={styles.button} onClick={copyRoomCodeToClipboard}>
+        <div>
+          <img src={copyIcon} alt="Ícone de copiar" />
+        </div>
+        <span>Sala #{code}</span>
+      </button>
+    </>
   );
 }

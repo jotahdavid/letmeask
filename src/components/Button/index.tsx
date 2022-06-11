@@ -15,6 +15,7 @@ export function Button({
   className,
   handleClick,
   outlined,
+  disabled,
 }: ButtonProps) {
   return (
     <button
@@ -23,6 +24,7 @@ export function Button({
         [styles.outlined]: outlined,
       })}
       type={type}
+      disabled={disabled}
     >
       {children}
     </button>
