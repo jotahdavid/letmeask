@@ -1,6 +1,6 @@
-import { FormEvent, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { push, ref, remove } from 'firebase/database';
+import { FormEvent, useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { get, push, ref, remove } from 'firebase/database';
 import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -20,12 +20,26 @@ type RoomParams = {
 };
 
 export function Room() {
-  const { user } = useAuth();
+  const { user, loadingUser } = useAuth();
+  const navigate = useNavigate();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
 
   const roomId = params.id;
   const { questions, roomTitle } = useRoom(roomId!);
+
+  useEffect(() => {
+    if (loadingUser || !user) return;
+
+    const verifyIfTheUserIsAdmin = async () => {
+      const room = await get(ref(database, `rooms/${roomId}`));
+
+      if (room.val().authorId !== user.id) return;
+
+      navigate(`/admin/rooms/${roomId}`);
+    };
+    verifyIfTheUserIsAdmin();
+  }, [loadingUser]);
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();

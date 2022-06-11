@@ -1,5 +1,6 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { get, ref, remove, update } from 'firebase/database';
+import { useEffect, useState } from 'react';
 import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -18,11 +19,34 @@ type RoomParams = {
 };
 
 export function AdminRoom() {
-  // const { user } = useAuth();
+  const { user, loadingUser } = useAuth();
+  const navigate = useNavigate();
   const params = useParams<RoomParams>();
+  const [loading, setLoading] = useState(true);
 
   const roomId = params.id;
   const { questions, roomTitle } = useRoom(roomId!);
+
+  useEffect(() => {
+    if (loadingUser) return;
+
+    if (!user) {
+      navigate(`/rooms/${roomId}`);
+      return;
+    }
+
+    const verifyIfTheUserIsAdmin = async () => {
+      const room = await get(ref(database, `rooms/${roomId}`));
+
+      if (room.val().authorId !== user.id) {
+        navigate(`/rooms/${roomId}`);
+        return;
+      }
+
+      setLoading(false);
+    };
+    verifyIfTheUserIsAdmin();
+  }, [loadingUser]);
 
   async function handleDeleteQuestion(questionId: string) {
     // TODO: change confirm window to a Modal
@@ -52,6 +76,10 @@ export function AdminRoom() {
     await update(questionRef, {
       isHighlighted: !question.isHighlighted,
     });
+  }
+
+  if (loading) {
+    return <p>Loading...</p>;
   }
 
   return (

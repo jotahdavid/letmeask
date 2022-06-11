@@ -17,6 +17,7 @@ type User = {
 type AuthContextType = {
   user: User | null;
   signInWithGoogle: () => Promise<void>;
+  loadingUser: boolean;
 };
 
 type AuthContextProviderType = {
@@ -27,6 +28,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider({ children }: AuthContextProviderType) {
   const [user, setUser] = useState<User | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
@@ -45,6 +47,8 @@ export function AuthContextProvider({ children }: AuthContextProviderType) {
             avatar: photoURL,
           });
         }
+
+        setLoadingUser(false);
       }
     );
 
@@ -73,7 +77,7 @@ export function AuthContextProvider({ children }: AuthContextProviderType) {
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, loadingUser }}>
       {children}
     </AuthContext.Provider>
   );
