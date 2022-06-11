@@ -72,6 +72,10 @@ export function useRoom(roomId: string) {
         }
       );
 
+      parsedQuestions.sort(
+        (questionA, questionB) => questionB.likeCount - questionA.likeCount
+      );
+
       setRoomTitle(roomData.title);
       setQuestions(parsedQuestions);
     });
