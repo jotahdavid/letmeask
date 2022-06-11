@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
+import classNames from 'classnames';
 
 import styles from './styles.module.scss';
 
@@ -18,9 +19,9 @@ export function Button({
   return (
     <button
       onClick={handleClick}
-      className={`${styles.button} ${className} ${
-        outlined ? styles.outlined : ''
-      }`}
+      className={classNames(styles.button, className, {
+        [styles.outlined]: outlined,
+      })}
       type={type}
     >
       {children}

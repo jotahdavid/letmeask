@@ -63,7 +63,7 @@ export function NewRoom() {
               alt="Logo do Letmeask"
             />
             <h2 className={styles.formTitle}>Criar uma nova sala</h2>
-            <form onSubmit={handleNewRoom} className={styles.form}>
+            <form className={styles.form} onSubmit={handleNewRoom}>
               <input
                 className={styles.roomCode}
                 type="text"

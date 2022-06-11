@@ -1,6 +1,7 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { get, ref, remove, update } from 'firebase/database';
 import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import classNames from 'classnames';
+import { get, ref, remove, update } from 'firebase/database';
 import { database } from '../../services/firebase';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -135,29 +136,24 @@ export function AdminRoom() {
                   author={author}
                   isHighlighted={isHighlighted}
                   isAnswered={isAnswered}
-                  className={`
-                    ${isAnswered ? styles.question__answered : ''}
-                    ${
-                      isHighlighted && !isAnswered
-                        ? styles.question__highlighted
-                        : ''
-                    }
-                  `}
+                  className={classNames({
+                    [styles.question__answered]: isAnswered,
+                    [styles.question__highlighted]:
+                      isHighlighted && !isAnswered,
+                  })}
                 >
                   {!isAnswered && (
                     <>
                       <button
-                        className={`${styles.question__cta} ${
-                          isAnswered ? styles.active : ''
-                        }`}
+                        className={styles.question__cta}
                         onClick={() => handleCheckQuestionAsAnswered(id)}
                       >
                         <CheckIcon />
                       </button>
                       <button
-                        className={`${styles.question__cta} ${
-                          isHighlighted && !isAnswered ? styles.active : ''
-                        }`}
+                        className={classNames(styles.question__cta, {
+                          [styles.active]: isHighlighted && !isAnswered,
+                        })}
                         onClick={() => handleHighlightQuestion(id)}
                       >
                         <AnswerIcon />

@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import classNames from 'classnames';
 import { get, push, ref, remove } from 'firebase/database';
 import { database } from '../../services/firebase';
 
@@ -171,18 +172,17 @@ export function Room() {
                   author={author}
                   isHighlighted={isHighlighted}
                   isAnswered={isAnswered}
-                  className={`
-                    ${isAnswered ? styles.question__answered : ''}
-                    ${
-                      isHighlighted && !isAnswered
-                        ? styles.question__highlighted
-                        : ''
-                    }
-                  `}
+                  className={classNames({
+                    [styles.question__answered]: isAnswered,
+                    [styles.question__highlighted]:
+                      isHighlighted && !isAnswered,
+                  })}
                 >
                   {!isAnswered && (
                     <button
-                      className={`${styles.like} ${likeId ? styles.liked : ''}`}
+                      className={classNames(styles.like, {
+                        [styles.liked]: likeId,
+                      })}
                       onClick={() => handleLikeQuestion(id)}
                     >
                       {likeCount > 0 && <span>{likeCount}</span>}

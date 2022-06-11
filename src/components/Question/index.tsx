@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import classNames from 'classnames';
+
 import styles from './styles.module.scss';
 
 type QuestionProps = {
@@ -23,12 +25,10 @@ export function Question({
 }: QuestionProps) {
   return (
     <li
-      className={`
-        ${styles.question}
-        ${isHighlighted && !isAnswered ? styles.isHighlighted : ''}
-        ${isAnswered ? styles.isAnswered : ''}
-        ${className}
-      `}
+      className={classNames(styles.question, className, {
+        [styles.isHighlighted]: isHighlighted && !isAnswered,
+        [styles.isAnswered]: isAnswered,
+      })}
     >
       <section>
         <p className={styles.question__content}>{content}</p>

@@ -36,6 +36,7 @@
     "import/extensions": "off",
     "import/no-unresolved": "off",
     "react/button-has-type": "off",
-    "react/jsx-no-bind": "off"
+    "react/jsx-no-bind": "off",
+    "import/no-named-default": "off"
   }
 }

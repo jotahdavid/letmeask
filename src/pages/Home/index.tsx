@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import classNames from 'classnames';
 import { get, ref } from 'firebase/database';
 import { database } from '../../services/firebase';
 
@@ -83,14 +83,14 @@ export function Home() {
               Crie sua sala com o Google
             </Button>
             <div className={styles.separator}>ou entre em uma sala</div>
-            <form onSubmit={handleEnterRoom} className={styles.form}>
+            <form className={styles.form} onSubmit={handleEnterRoom}>
               {!roomExists && (
                 <p className={styles.messageError}>Sala não encontrada!</p>
               )}
               <input
-                className={`${styles.roomCode} ${
-                  !roomExists ? styles.inputError : ''
-                }`}
+                className={classNames(styles.roomCode, {
+                  [styles.inputError]: !roomExists,
+                })}
                 type="text"
                 placeholder="Digite o código da sala"
                 onChange={(event) => {
