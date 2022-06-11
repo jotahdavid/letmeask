@@ -26,7 +26,7 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState('');
 
   const roomId = params.id;
-  const { questions, roomTitle } = useRoom(roomId!);
+  const { questions, roomTitle, isRoomDeleted } = useRoom(roomId!);
 
   useEffect(() => {
     if (loadingUser || !user) return;
@@ -40,6 +40,12 @@ export function Room() {
     };
     verifyIfTheUserIsAdmin();
   }, [loadingUser]);
+
+  useEffect(() => {
+    if (isRoomDeleted) {
+      navigate('/');
+    }
+  }, [isRoomDeleted]);
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();

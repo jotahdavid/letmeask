@@ -78,6 +78,18 @@ export function AdminRoom() {
     });
   }
 
+  async function handleDeleteRoom() {
+    // TODO: change confirm window to a Modal
+    const confirmResult = window.confirm(
+      'Tem certeza que você deseja encerrar a sala?'
+    );
+
+    if (!confirmResult) return;
+
+    await remove(ref(database, `rooms/${roomId}`));
+    navigate('/');
+  }
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -96,7 +108,9 @@ export function AdminRoom() {
 
           <div className={styles.header__cta}>
             <RoomCode code={roomId!} />
-            <Button outlined>Encerrar sala</Button>
+            <Button outlined handleClick={handleDeleteRoom}>
+              Encerrar sala
+            </Button>
           </div>
         </div>
       </header>
