@@ -135,6 +135,14 @@ export function AdminRoom() {
                   author={author}
                   isHighlighted={isHighlighted}
                   isAnswered={isAnswered}
+                  className={`
+                    ${isAnswered ? styles.question__answered : ''}
+                    ${
+                      isHighlighted && !isAnswered
+                        ? styles.question__highlighted
+                        : ''
+                    }
+                  `}
                 >
                   {!isAnswered && (
                     <>

@@ -10,6 +10,7 @@ type QuestionProps = {
   isHighlighted?: boolean;
   isAnswered?: boolean;
   children?: ReactNode;
+  className?: string;
 };
 
 export function Question({
@@ -18,6 +19,7 @@ export function Question({
   isHighlighted,
   isAnswered,
   children,
+  className,
 }: QuestionProps) {
   return (
     <li
@@ -25,6 +27,7 @@ export function Question({
         ${styles.question}
         ${isHighlighted && !isAnswered ? styles.isHighlighted : ''}
         ${isAnswered ? styles.isAnswered : ''}
+        ${className}
       `}
     >
       <section>
@@ -51,4 +54,5 @@ Question.defaultProps = {
   isHighlighted: false,
   isAnswered: false,
   children: '',
+  className: '',
 };
