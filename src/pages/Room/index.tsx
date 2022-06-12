@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
+import toast from 'react-hot-toast';
 import { get, push, ref, remove } from 'firebase/database';
 import { database } from '../../services/firebase';
 
@@ -21,7 +22,7 @@ type RoomParams = {
 };
 
 export function Room() {
-  const { user, loadingUser } = useAuth();
+  const { user, loadingUser, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
@@ -74,6 +75,15 @@ export function Room() {
   }
 
   async function handleLikeQuestion(questionId: string) {
+    if (!user) {
+      try {
+        await signInWithGoogle();
+      } catch (err) {
+        toast.error('Falha na autenticação!');
+      }
+      return;
+    }
+
     const questionLiked = questions.find(
       (question) => question.likeId && question.id === questionId
     );
@@ -92,7 +102,7 @@ export function Room() {
       `rooms/${roomId}/questions/${questionId}/likes`
     );
     await push(newLike, {
-      authorId: user?.id,
+      authorId: user.id,
     });
   }
 
