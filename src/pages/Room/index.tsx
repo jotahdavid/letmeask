@@ -28,7 +28,7 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState('');
 
   const roomId = params.id;
-  const { questions, roomTitle, isRoomDeleted } = useRoom(roomId!);
+  const { questions, roomTitle, roomExists } = useRoom(roomId!);
 
   useEffect(() => {
     if (loadingUser || !user) return;
@@ -44,10 +44,10 @@ export function Room() {
   }, [loadingUser]);
 
   useEffect(() => {
-    if (isRoomDeleted) {
+    if (roomExists) {
       navigate('/');
     }
-  }, [isRoomDeleted]);
+  }, [roomExists]);
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
