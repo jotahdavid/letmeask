@@ -39,7 +39,7 @@ export function Home() {
 
     if (roomCode.trim() === '') return;
 
-    const room = await get(ref(database, `rooms/${roomCode}`));
+    const room = await get(ref(database, `rooms/-${roomCode}`));
 
     if (!room.exists()) {
       setRoomExists(false);

@@ -31,7 +31,7 @@ export function NewRoom() {
       authorId: user?.id,
     });
 
-    navigate(`/admin/rooms/${roomId.key}`);
+    navigate(`/admin/rooms/${roomId.key?.slice(1)}`);
   }
 
   return (

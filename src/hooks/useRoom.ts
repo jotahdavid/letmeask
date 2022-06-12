@@ -43,14 +43,14 @@ export function useRoom(roomId: string) {
   const { user } = useAuth();
   const [roomTitle, setRoomTitle] = useState('');
   const [questions, setQuestions] = useState<QuestionType[]>([]);
-  const [roomExists, setRoomExists] = useState(false);
+  const [roomExists, setRoomExists] = useState(true);
 
   useEffect(() => {
     const roomRef = ref(database, `rooms/${roomId}`);
 
     const unsubscribe = onValue(roomRef, (room) => {
       if (!room.exists()) {
-        setRoomExists(true);
+        setRoomExists(false);
         return;
       }
 

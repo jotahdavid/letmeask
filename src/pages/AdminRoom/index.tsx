@@ -25,22 +25,24 @@ export function AdminRoom() {
   const params = useParams<RoomParams>();
   const [loading, setLoading] = useState(true);
 
-  const roomId = params.id;
-  const { questions, roomTitle } = useRoom(roomId!);
+  const roomId = `-${params.id}`;
+  const { questions, roomTitle, roomExists } = useRoom(roomId!);
 
   useEffect(() => {
     if (loadingUser) return;
 
     if (!user) {
-      navigate(`/rooms/${roomId}`);
+      navigate(`/rooms/${roomId.slice(1)}`);
       return;
     }
 
     const verifyIfTheUserIsAdmin = async () => {
       const room = await get(ref(database, `rooms/${roomId}`));
 
+      if (!room.exists()) return;
+
       if (room.val().authorId !== user.id) {
-        navigate(`/rooms/${roomId}`);
+        navigate(`/rooms/${roomId.slice(1)}`);
         return;
       }
 
@@ -48,6 +50,12 @@ export function AdminRoom() {
     };
     verifyIfTheUserIsAdmin();
   }, [loadingUser]);
+
+  useEffect(() => {
+    if (!roomExists) {
+      navigate('/');
+    }
+  }, [roomExists]);
 
   async function handleDeleteQuestion(questionId: string) {
     // TODO: change confirm window to a Modal
@@ -108,7 +116,7 @@ export function AdminRoom() {
           </Link>
 
           <div className={styles.header__cta}>
-            <RoomCode code={roomId!} />
+            <RoomCode code={roomId.slice(1)} />
             <Button outlined handleClick={handleDeleteRoom}>
               Encerrar sala
             </Button>

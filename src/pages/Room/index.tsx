@@ -27,7 +27,7 @@ export function Room() {
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState('');
 
-  const roomId = params.id;
+  const roomId = `-${params.id}`;
   const { questions, roomTitle, roomExists } = useRoom(roomId!);
 
   useEffect(() => {
@@ -36,15 +36,17 @@ export function Room() {
     const verifyIfTheUserIsAdmin = async () => {
       const room = await get(ref(database, `rooms/${roomId}`));
 
+      if (!room.exists()) return;
+
       if (room.val().authorId !== user.id) return;
 
-      navigate(`/admin/rooms/${roomId}`);
+      navigate(`/admin/rooms/${roomId.slice(1)}`);
     };
     verifyIfTheUserIsAdmin();
   }, [loadingUser, user]);
 
   useEffect(() => {
-    if (roomExists) {
+    if (!roomExists) {
       navigate('/');
     }
   }, [roomExists]);
@@ -125,7 +127,7 @@ export function Room() {
               alt="Logo do Letmeask"
             />
           </Link>
-          <RoomCode code={roomId!} />
+          <RoomCode code={roomId.slice(1)} />
         </div>
       </header>
 
