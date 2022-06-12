@@ -41,7 +41,7 @@ export function Room() {
       navigate(`/admin/rooms/${roomId}`);
     };
     verifyIfTheUserIsAdmin();
-  }, [loadingUser]);
+  }, [loadingUser, user]);
 
   useEffect(() => {
     if (roomExists) {
@@ -106,6 +106,14 @@ export function Room() {
     });
   }
 
+  async function handleSignIn() {
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      toast.error('Falha na autenticação!');
+    }
+  }
+
   return (
     <>
       <header className={styles.header}>
@@ -141,7 +149,14 @@ export function Room() {
             {!user ? (
               <p className={styles.form__text}>
                 Para enviar uma pergunta,&nbsp;
-                <button className={styles.form__login}>faça seu login</button>.
+                <button
+                  className={styles.form__login}
+                  type="button"
+                  onClick={handleSignIn}
+                >
+                  faça seu login
+                </button>
+                .
               </p>
             ) : (
               <div className={styles.userInfo}>
