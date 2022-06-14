@@ -3,19 +3,19 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
 import { get, push, ref, remove } from 'firebase/database';
-import { database } from '../../services/firebase';
+import { database } from '@services/firebase';
 
-import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../../components/Button';
-import { RoomCode } from '../../components/RoomCode';
-import { LikeIcon } from '../../components/Icons';
+import { useAuth } from '@hooks/useAuth';
+import { useRoom } from '@hooks/useRoom';
+import { Button } from '@components/Button';
+import { RoomCode } from '@components/RoomCode';
+import { Question } from '@components/Question';
+import { LikeIcon } from '@components/Icons';
 
-import letmeaskLogo from '../../assets/images/logo.svg';
-import avatarIcon from '../../assets/images/avatar.svg';
-import emptyQuestionIllustration from '../../assets/images/empty-questions.svg';
+import letmeaskLogo from '@assets/images/logo.svg';
+import avatarIcon from '@assets/images/avatar.svg';
+import emptyQuestionIllustration from '@assets/images/empty-questions.svg';
 import styles from './styles.module.scss';
-import { Question } from '../../components/Question';
-import { useRoom } from '../../hooks/useRoom';
 
 type RoomParams = {
   id: string;

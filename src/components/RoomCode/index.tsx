@@ -1,8 +1,8 @@
 import toast from 'react-hot-toast';
 
-import { ToasterStylized } from '../ToasterStylized';
+import { ToasterStylized } from '@components/ToasterStylized';
 
-import copyIcon from '../../assets/images/copy.svg';
+import copyIcon from '@assets/images/copy.svg';
 import styles from './styles.module.scss';
 
 type RoomCodeProps = {

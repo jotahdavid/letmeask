@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
 import { get, ref } from 'firebase/database';
-import { database } from '../../services/firebase';
+import { database } from '@services/firebase';
 
-import { useAuth } from '../../hooks/useAuth';
-import { Button } from '../../components/Button';
-import { ToasterStylized } from '../../components/ToasterStylized';
+import { useAuth } from '@hooks/useAuth';
+import { Button } from '@components/Button';
+import { ToasterStylized } from '@components/ToasterStylized';
 
-import illustrationImg from '../../assets/images/illustration.svg';
-import letmeaskLogo from '../../assets/images/logo.svg';
-import googleIcon from '../../assets/images/google-icon.svg';
-import logInIcon from '../../assets/images/log-in.svg';
+import illustrationImg from '@assets/images/illustration.svg';
+import letmeaskLogo from '@assets/images/logo.svg';
+import googleIcon from '@assets/images/google-icon.svg';
+import logInIcon from '@assets/images/log-in.svg';
 import styles from './styles.module.scss';
 
 export function Home() {

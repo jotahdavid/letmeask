@@ -2,18 +2,19 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { get, ref, remove, update } from 'firebase/database';
-import { database } from '../../services/firebase';
+import { database } from '@services/firebase';
 
-import { useAuth } from '../../hooks/useAuth';
-import { useRoom } from '../../hooks/useRoom';
-import { Button } from '../../components/Button';
-import { RoomCode } from '../../components/RoomCode';
-import { Question } from '../../components/Question';
+import { Button } from '@components/Button';
+import { RoomCode } from '@components/RoomCode';
+import { Question } from '@components/Question';
+import { AnswerIcon, CheckIcon, DeleteIcon } from '@components/Icons';
 
-import letmeaskLogo from '../../assets/images/logo.svg';
-import emptyQuestionIllustration from '../../assets/images/empty-questions.svg';
+import { useAuth } from '@hooks/useAuth';
+import { useRoom } from '@hooks/useRoom';
+
+import letmeaskLogo from '@assets/images/logo.svg';
+import emptyQuestionIllustration from '@assets/images/empty-questions.svg';
 import styles from './styles.module.scss';
-import { AnswerIcon, CheckIcon, DeleteIcon } from '../../components/Icons';
 
 type RoomParams = {
   id: string;
