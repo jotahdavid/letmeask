@@ -11,7 +11,16 @@ type RoomCodeProps = {
 
 export function RoomCode({ code }: RoomCodeProps) {
   async function copyRoomCodeToClipboard() {
-    await navigator.clipboard.writeText(code);
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch (err) {
+      const $el = document.createElement('textarea');
+      $el.value = code;
+      document.body.appendChild($el);
+      $el.select();
+      document.execCommand('copy');
+      document.body.removeChild($el);
+    }
     toast.success('Código copiado!', {
       icon: '📋',
     });
@@ -25,7 +34,7 @@ export function RoomCode({ code }: RoomCodeProps) {
         <div>
           <img src={copyIcon} alt="Ícone de copiar" />
         </div>
-        <span>Sala #{code}</span>
+        <span>Código da sala</span>
       </button>
     </>
   );

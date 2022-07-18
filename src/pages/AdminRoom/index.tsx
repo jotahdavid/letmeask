@@ -108,7 +108,7 @@ export function AdminRoom() {
     <>
       <header className={styles.header}>
         <div className={styles.header__content}>
-          <Link to="/">
+          <Link to="/" className={styles.logoContainer}>
             <img
               className={styles.logo}
               src={letmeaskLogo}
