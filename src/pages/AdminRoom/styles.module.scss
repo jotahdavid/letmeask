@@ -1,4 +1,4 @@
-@import "../../styles/_px-to-rem.scss";
+@import "../../styles/px-to-rem";
 
 .header {
   width: 100%;
@@ -6,6 +6,11 @@
   border-bottom: 2px solid #E2E2E2;
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: rem(900)) {
+    height: unset;
+    padding: 1rem 0;
+  }
 
   &__content {
     width: 90%;
@@ -15,6 +20,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media screen and (max-width: rem(550)) {
+      display: unset;
+    }
+  }
+
+  .logoContainer {
+    @media screen and (max-width: rem(550)) {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: rem(20);
+    }
   }
 
   .logo {
@@ -26,6 +45,12 @@
     align-items: center;
     gap: rem(8);
 
+    @media screen and (max-width: rem(550)) {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 1rem;
+    }
+
     button {
       height: rem(40);
       transition: all 200ms ease;
@@ -34,12 +59,17 @@
         background-color: #835AFD;
         color: #FFFFFF;
       }
+
+      @media screen and (max-width: rem(550)) {
+        height: rem(48);
+      }
     }
   }
 }
 
 .main {
   max-width: 800px;
+  width: 90%;
   margin: rem(64) auto 0 auto;
 
   .main__header {
@@ -129,11 +159,15 @@
   background-color: transparent;
 
   &:hover path, &:hover circle {
-    stroke: #9e7eff;
+    @media screen and (min-width: rem(900)) {
+      stroke: #9e7eff;
+    }
   }
 
   &.question__delete:hover path {
-    stroke: #E73F5D;
+    @media screen and (min-width: rem(900)) {
+      stroke: #E73F5D;
+    }
   }
 
   &.active path {

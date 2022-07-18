@@ -1,4 +1,4 @@
-@import "../../styles/_px-to-rem.scss";
+@import "../../styles/px-to-rem";
 
 .question {
   background-color: #fefefe;
@@ -22,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: rem(8);
   }
 
   &__cta {
