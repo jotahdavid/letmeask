@@ -12,6 +12,7 @@ import { RoomCode } from '@components/RoomCode';
 import { Question } from '@components/Question';
 import { LikeIcon } from '@components/Icons';
 import { SpinnerLoading } from '@components/SpinnerLoading';
+import { ToasterStylized } from '@components/ToasterStylized';
 
 import letmeaskLogo from '@assets/images/logo.svg';
 import avatarIcon from '@assets/images/avatar.svg';
@@ -58,7 +59,13 @@ export function Room() {
     if (newQuestion.trim() === '') return;
 
     if (!user) {
-      throw new Error('You must be logged in');
+      toast.error('Você tem que estar logado!');
+      return;
+    }
+
+    if (newQuestion.length > 250) {
+      toast.error('Você ultrapassou o limite de 250 caracteres');
+      return;
     }
 
     const question = {
@@ -123,6 +130,8 @@ export function Room() {
 
   return (
     <>
+      <ToasterStylized />
+
       <header className={styles.header}>
         <div className={styles.header__content}>
           <Link to="/">

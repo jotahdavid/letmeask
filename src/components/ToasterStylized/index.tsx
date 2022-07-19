@@ -10,6 +10,7 @@ export function ToasterStylized() {
           fontFamily: '"Roboto", sans-serif',
           backgroundColor: '#835AFD',
           color: '#fff',
+          textAlign: 'center',
         },
       }}
     />,
