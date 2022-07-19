@@ -8,6 +8,12 @@ html, body,
   height: 100%;
 }
 
+#modal-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
 :root {
   @media screen and (max-width: rem(900)) {
     font-size: 14px;
