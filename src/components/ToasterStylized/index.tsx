@@ -1,7 +1,8 @@
+import ReactDOM from 'react-dom';
 import { Toaster } from 'react-hot-toast';
 
 export function ToasterStylized() {
-  return (
+  return ReactDOM.createPortal(
     <Toaster
       toastOptions={{
         style: {
@@ -9,8 +10,10 @@ export function ToasterStylized() {
           fontFamily: '"Roboto", sans-serif',
           backgroundColor: '#835AFD',
           color: '#fff',
+          textAlign: 'center',
         },
       }}
-    />
+    />,
+    document.getElementById('modal-root')!
   );
 }

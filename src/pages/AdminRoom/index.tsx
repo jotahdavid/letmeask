@@ -8,6 +8,7 @@ import { Button } from '@components/Button';
 import { RoomCode } from '@components/RoomCode';
 import { Question } from '@components/Question';
 import { AnswerIcon, CheckIcon, DeleteIcon } from '@components/Icons';
+import { SpinnerLoading } from '@components/SpinnerLoading';
 
 import { useAuth } from '@hooks/useAuth';
 import { useRoom } from '@hooks/useRoom';
@@ -27,7 +28,7 @@ export function AdminRoom() {
   const [loading, setLoading] = useState(true);
 
   const roomId = `-${params.id}`;
-  const { questions, roomTitle, roomExists } = useRoom(roomId!);
+  const { questions, roomTitle, roomExists, loadingRoom } = useRoom(roomId!);
 
   useEffect(() => {
     if (loadingUser) return;
@@ -100,8 +101,8 @@ export function AdminRoom() {
     navigate('/');
   }
 
-  if (loading) {
-    return <p>Loading...</p>;
+  if (loading || loadingRoom) {
+    return <SpinnerLoading />;
   }
 
   return (
