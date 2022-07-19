@@ -1,10 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { push, ref } from 'firebase/database';
 import { database } from '@services/firebase';
 
 import { useAuth } from '@hooks/useAuth';
 import { Button } from '@components/Button';
+import { ToasterStylized } from '@components/ToasterStylized';
 
 import illustrationImg from '@assets/images/illustration.svg';
 import letmeaskLogo from '@assets/images/logo.svg';
@@ -25,6 +27,11 @@ export function NewRoom() {
 
     if (newRoom.trim() === '') return;
 
+    if (newRoom.length > 115) {
+      toast.error('Nome de sala muito longo');
+      return;
+    }
+
     const roomRef = await ref(database, 'rooms');
     const roomId = await push(roomRef, {
       title: newRoom.trim(),
@@ -36,6 +43,8 @@ export function NewRoom() {
 
   return (
     <div className={styles.container}>
+      <ToasterStylized />
+
       <div className={styles.background}>
         <aside className={styles.aside}>
           <section className={styles.asideWrapper}>
@@ -71,7 +80,11 @@ export function NewRoom() {
                 onChange={(event) => setNewRoom(event.target.value)}
                 value={newRoom}
               />
-              <Button className={styles.buttonSubmit} type="submit">
+              <Button
+                className={styles.buttonSubmit}
+                type="submit"
+                disabled={newRoom.length === 0}
+              >
                 Criar sala
               </Button>
               <p>
