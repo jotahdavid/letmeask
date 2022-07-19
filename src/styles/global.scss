@@ -1,7 +1,9 @@
 @import "reset";
 @import "px-to-rem";
 
-html, body, #root {
+html, body,
+#root, #modal-root
+{
   width: 100%;
   height: 100%;
 }
