@@ -28,7 +28,7 @@ export function RoomCode({ code }: RoomCodeProps) {
 
   return (
     <>
-      <ToasterStylized />
+      <ToasterStylized styles={{ backgroundColor: '#835AFD', color: '#fff' }} />
 
       <button className={styles.button} onClick={copyRoomCodeToClipboard}>
         <div>
