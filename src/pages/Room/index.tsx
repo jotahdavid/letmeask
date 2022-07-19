@@ -11,6 +11,7 @@ import { Button } from '@components/Button';
 import { RoomCode } from '@components/RoomCode';
 import { Question } from '@components/Question';
 import { LikeIcon } from '@components/Icons';
+import { SpinnerLoading } from '@components/SpinnerLoading';
 
 import letmeaskLogo from '@assets/images/logo.svg';
 import avatarIcon from '@assets/images/avatar.svg';
@@ -28,7 +29,7 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState('');
 
   const roomId = `-${params.id}`;
-  const { questions, roomTitle, roomExists } = useRoom(roomId!);
+  const { questions, roomTitle, roomExists, loadingRoom } = useRoom(roomId!);
 
   useEffect(() => {
     if (loadingUser || !user) return;
@@ -114,6 +115,10 @@ export function Room() {
     } catch (err) {
       toast.error('Falha na autenticação!');
     }
+  }
+
+  if (loadingRoom) {
+    return <SpinnerLoading />;
   }
 
   return (

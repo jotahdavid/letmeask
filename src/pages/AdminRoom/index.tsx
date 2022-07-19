@@ -28,7 +28,7 @@ export function AdminRoom() {
   const [loading, setLoading] = useState(true);
 
   const roomId = `-${params.id}`;
-  const { questions, roomTitle, roomExists } = useRoom(roomId!);
+  const { questions, roomTitle, roomExists, loadingRoom } = useRoom(roomId!);
 
   useEffect(() => {
     if (loadingUser) return;
@@ -101,7 +101,7 @@ export function AdminRoom() {
     navigate('/');
   }
 
-  if (loading) {
+  if (loading || loadingRoom) {
     return <SpinnerLoading />;
   }
 
