@@ -8,6 +8,7 @@ import { Button } from '@components/Button';
 import { RoomCode } from '@components/RoomCode';
 import { Question } from '@components/Question';
 import { AnswerIcon, CheckIcon, DeleteIcon } from '@components/Icons';
+import { SpinnerLoading } from '@components/SpinnerLoading';
 
 import { useAuth } from '@hooks/useAuth';
 import { useRoom } from '@hooks/useRoom';
@@ -101,7 +102,7 @@ export function AdminRoom() {
   }
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <SpinnerLoading />;
   }
 
   return (
