@@ -1,4 +1,4 @@
-export function LikeIcon() {
+function LikeIcon() {
   return (
     <svg
       width="24"
@@ -18,7 +18,7 @@ export function LikeIcon() {
   );
 }
 
-export function CheckIcon() {
+function CheckIcon() {
   return (
     <svg
       width="24"
@@ -47,7 +47,7 @@ export function CheckIcon() {
   );
 }
 
-export function AnswerIcon() {
+function AnswerIcon() {
   return (
     <svg
       width="24"
@@ -69,7 +69,7 @@ export function AnswerIcon() {
   );
 }
 
-export function DeleteIcon() {
+function DeleteIcon() {
   return (
     <svg
       width="24"
@@ -95,3 +95,5 @@ export function DeleteIcon() {
     </svg>
   );
 }
+
+export { LikeIcon, CheckIcon, AnswerIcon, DeleteIcon };

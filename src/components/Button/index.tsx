@@ -9,7 +9,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
 };
 
-export function Button({
+function Button({
   type,
   children,
   className,
@@ -36,3 +36,5 @@ Button.defaultProps = {
   outlined: false,
   className: '',
 };
+
+export { Button };

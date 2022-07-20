@@ -15,7 +15,7 @@ type QuestionProps = {
   className?: string;
 };
 
-export function Question({
+function Question({
   content,
   author,
   isHighlighted,
@@ -56,3 +56,5 @@ Question.defaultProps = {
   children: '',
   className: '',
 };
+
+export { Question };

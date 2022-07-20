@@ -12,7 +12,7 @@ import illustrationImg from '@assets/images/illustration.svg';
 import letmeaskLogo from '@assets/images/logo.svg';
 import styles from './styles.module.scss';
 
-export function NewRoom() {
+function NewRoom() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -98,3 +98,5 @@ export function NewRoom() {
     </div>
   );
 }
+
+export { NewRoom };

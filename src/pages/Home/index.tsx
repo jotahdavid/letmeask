@@ -15,7 +15,7 @@ import googleIcon from '@assets/images/google-icon.svg';
 import logInIcon from '@assets/images/log-in.svg';
 import styles from './styles.module.scss';
 
-export function Home() {
+function Home() {
   const navigate = useNavigate();
   const { user, signInWithGoogle } = useAuth();
 
@@ -117,3 +117,5 @@ export function Home() {
     </div>
   );
 }
+
+export { Home };

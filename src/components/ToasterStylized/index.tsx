@@ -6,7 +6,7 @@ type ToasterStylizedProps = {
   styles?: CSSProperties;
 };
 
-export function ToasterStylized({ styles }: ToasterStylizedProps) {
+function ToasterStylized({ styles }: ToasterStylizedProps) {
   return ReactDOM.createPortal(
     <Toaster
       toastOptions={{
@@ -29,3 +29,5 @@ export function ToasterStylized({ styles }: ToasterStylizedProps) {
 ToasterStylized.defaultProps = {
   styles: {},
 };
+
+export { ToasterStylized };

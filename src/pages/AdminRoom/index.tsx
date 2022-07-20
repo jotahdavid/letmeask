@@ -22,7 +22,7 @@ type RoomParams = {
   id: string;
 };
 
-export function AdminRoom() {
+function AdminRoom() {
   const { user, loadingUser } = useAuth();
   const navigate = useNavigate();
   const params = useParams<RoomParams>();
@@ -219,3 +219,5 @@ export function AdminRoom() {
     </>
   );
 }
+
+export { AdminRoom };

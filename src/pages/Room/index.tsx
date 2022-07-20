@@ -23,7 +23,7 @@ type RoomParams = {
   id: string;
 };
 
-export function Room() {
+function Room() {
   const { user, loadingUser, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
   const params = useParams<RoomParams>();
@@ -252,3 +252,5 @@ export function Room() {
     </>
   );
 }
+
+export { Room };

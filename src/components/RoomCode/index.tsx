@@ -9,7 +9,7 @@ type RoomCodeProps = {
   code: string;
 };
 
-export function RoomCode({ code }: RoomCodeProps) {
+function RoomCode({ code }: RoomCodeProps) {
   async function copyRoomCodeToClipboard() {
     try {
       await navigator.clipboard.writeText(code);
@@ -39,3 +39,5 @@ export function RoomCode({ code }: RoomCodeProps) {
     </>
   );
 }
+
+export { RoomCode };
