@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { get, ref, remove, update } from 'firebase/database';
@@ -27,6 +27,10 @@ export function AdminRoom() {
   const navigate = useNavigate();
   const params = useParams<RoomParams>();
   const [loading, setLoading] = useState(true);
+
+  const [showModalDeleteRoom, setShowModalDeleteRoom] = useState(false);
+  const [showModalDeleteQuestion, setShowModalDeleteQuestion] = useState(false);
+  const questionIdToDelete = useRef<string | null>(null);
 
   const roomId = `-${params.id}`;
   const { questions, roomTitle, roomExists, loadingRoom } = useRoom(roomId!);
@@ -60,15 +64,12 @@ export function AdminRoom() {
     }
   }, [roomExists]);
 
-  async function handleDeleteQuestion(questionId: string) {
-    // TODO: change confirm window to a Modal
-    const confirmResult = window.confirm(
-      'Tem certeza que você deseja excluir esta pergunta?'
+  async function handleDeleteQuestion(confirm: boolean) {
+    if (!confirm) return;
+
+    await remove(
+      ref(database, `rooms/${roomId}/questions/${questionIdToDelete.current}`)
     );
-
-    if (!confirmResult) return;
-
-    await remove(ref(database, `rooms/${roomId}/questions/${questionId}`));
   }
 
   async function handleCheckQuestionAsAnswered(questionId: string) {
@@ -90,13 +91,8 @@ export function AdminRoom() {
     });
   }
 
-  async function handleDeleteRoom() {
-    // TODO: change confirm window to a Modal
-    const confirmResult = window.confirm(
-      'Tem certeza que você deseja encerrar a sala?'
-    );
-
-    if (!confirmResult) return;
+  async function handleDeleteRoom(confirm: boolean) {
+    if (!confirm) return;
 
     await remove(ref(database, `rooms/${roomId}`));
     navigate('/');
@@ -108,7 +104,6 @@ export function AdminRoom() {
 
   return (
     <>
-      <ModalDanger />
       <header className={styles.header}>
         <div className={styles.header__content}>
           <Link to="/" className={styles.logoContainer}>
@@ -121,9 +116,18 @@ export function AdminRoom() {
 
           <div className={styles.header__cta}>
             <RoomCode code={roomId.slice(1)} />
-            <Button outlined handleClick={handleDeleteRoom}>
+            <Button outlined handleClick={() => setShowModalDeleteRoom(true)}>
               Encerrar sala
             </Button>
+            {showModalDeleteRoom && (
+              <ModalDanger
+                closeModal={() => setShowModalDeleteRoom(false)}
+                handleResult={handleDeleteRoom}
+                title="Encerrar sala"
+                warn="Tem certeza que você deseja encerrar esta sala?"
+                buttonPlaceholder="Sim, encerrar"
+              />
+            )}
           </div>
         </div>
       </header>
@@ -140,48 +144,63 @@ export function AdminRoom() {
 
         <ul className={styles.questions}>
           {questions.length > 0 ? (
-            questions.map(
-              ({ id, content, author, isHighlighted, isAnswered }) => (
-                <Question
-                  key={id}
-                  content={content}
-                  author={author}
-                  isHighlighted={isHighlighted}
-                  isAnswered={isAnswered}
-                  className={classNames({
-                    [styles.question__answered]: isAnswered,
-                    [styles.question__highlighted]:
-                      isHighlighted && !isAnswered,
-                  })}
-                >
-                  {!isAnswered && (
-                    <>
-                      <button
-                        className={styles.question__cta}
-                        onClick={() => handleCheckQuestionAsAnswered(id)}
-                      >
-                        <CheckIcon />
-                      </button>
-                      <button
-                        className={classNames(styles.question__cta, {
-                          [styles.active]: isHighlighted && !isAnswered,
-                        })}
-                        onClick={() => handleHighlightQuestion(id)}
-                      >
-                        <AnswerIcon />
-                      </button>
-                    </>
-                  )}
-
-                  <button
-                    className={`${styles.question__cta} ${styles.question__delete}`}
-                    onClick={() => handleDeleteQuestion(id)}
+            <>
+              {showModalDeleteQuestion && (
+                <ModalDanger
+                  closeModal={() => setShowModalDeleteQuestion(false)}
+                  handleResult={handleDeleteQuestion}
+                  icon="trash"
+                  title="Excluir pergunta"
+                  warn="Tem certeza que você deseja excluir esta pergunta?"
+                  buttonPlaceholder="Sim, excluir"
+                />
+              )}
+              {questions.map(
+                ({ id, content, author, isHighlighted, isAnswered }) => (
+                  <Question
+                    key={id}
+                    content={content}
+                    author={author}
+                    isHighlighted={isHighlighted}
+                    isAnswered={isAnswered}
+                    className={classNames({
+                      [styles.question__answered]: isAnswered,
+                      [styles.question__highlighted]:
+                        isHighlighted && !isAnswered,
+                    })}
                   >
-                    <DeleteIcon />
-                  </button>
-                </Question>
-              )
-            )
+                    {!isAnswered && (
+                      <>
+                        <button
+                          className={styles.question__cta}
+                          onClick={() => handleCheckQuestionAsAnswered(id)}
+                        >
+                          <CheckIcon />
+                        </button>
+                        <button
+                          className={classNames(styles.question__cta, {
+                            [styles.active]: isHighlighted && !isAnswered,
+                          })}
+                          onClick={() => handleHighlightQuestion(id)}
+                        >
+                          <AnswerIcon />
+                        </button>
+                      </>
+                    )}
+
+                    <button
+                      className={`${styles.question__cta} ${styles.question__delete}`}
+                      onClick={() => {
+                        questionIdToDelete.current = id;
+                        setShowModalDeleteQuestion(true);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </button>
+                  </Question>
+                )
+              )}
+            </>
           ) : (
             <div className={styles.questions__empty}>
               <img
