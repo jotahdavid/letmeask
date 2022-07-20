@@ -9,6 +9,7 @@ import { RoomCode } from '@components/RoomCode';
 import { Question } from '@components/Question';
 import { AnswerIcon, CheckIcon, DeleteIcon } from '@components/Icons';
 import { SpinnerLoading } from '@components/SpinnerLoading';
+import { ModalDanger } from '@components/ModalDanger';
 
 import { useAuth } from '@hooks/useAuth';
 import { useRoom } from '@hooks/useRoom';
@@ -107,6 +108,7 @@ export function AdminRoom() {
 
   return (
     <>
+      <ModalDanger />
       <header className={styles.header}>
         <div className={styles.header__content}>
           <Link to="/" className={styles.logoContainer}>
