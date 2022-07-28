@@ -48,10 +48,16 @@ function Room() {
   }, [loadingUser, user]);
 
   useEffect(() => {
+    if (!loadingRoom && !roomExists) {
+      toast.error('A sala foi deletada', { duration: 10000 });
+      setTimeout(navigate, 100, '/');
+      return;
+    }
+
     if (!roomExists) {
       navigate('/');
     }
-  }, [roomExists]);
+  }, [loadingRoom, roomExists]);
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
