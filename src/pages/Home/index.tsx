@@ -22,13 +22,9 @@ function Home() {
   const [roomCode, setRoomCode] = useState('');
   const [roomExists, setRoomExists] = useState(true);
 
-  async function handleCreateRoom() {
+  async function handleLoginWithGoogle() {
     try {
-      if (!user) {
-        await signInWithGoogle();
-      }
-
-      navigate('/rooms/new');
+      await signInWithGoogle();
     } catch (err) {
       toast.error('Falha na autenticação!');
     }
@@ -79,13 +75,22 @@ function Home() {
               src={letmeaskLogo}
               alt="Logo do Letmeask"
             />
-            <Button
-              handleClick={handleCreateRoom}
-              className={styles.googleLogin}
-            >
-              <img src={googleIcon} alt="Logo do Google" />
-              Crie sua sala com o Google
-            </Button>
+            {!user ? (
+              <Button
+                handleClick={handleLoginWithGoogle}
+                className={styles.googleLogin}
+              >
+                <img src={googleIcon} alt="Logo do Google" />
+                Entre com a sua conta Google
+              </Button>
+            ) : (
+              <Button
+                handleClick={() => navigate('/rooms/new')}
+                className={styles.gradient}
+              >
+                Crie agora uma sala
+              </Button>
+            )}
             <div className={styles.separator}>ou entre em uma sala</div>
             <form className={styles.form} onSubmit={handleEnterRoom}>
               {!roomExists && (

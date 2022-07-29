@@ -21,6 +21,10 @@
 
   transition: background-color ease 200ms;
 
+  &:not(:disabled):hover {
+    background-color: #6F4BD8;
+  }
+
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -32,5 +36,12 @@
 
     font-size: rem(14);
     color: #835AFD;
+
+    transition: all 200ms ease;
+
+    &:hover {
+      background-color: #835AFD;
+      color: #FFFFFF;
+    }
   }
 }
