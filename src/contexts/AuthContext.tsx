@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
   User as FirebaseUser,
 } from 'firebase/auth';
 import { auth } from '../services/firebase';
@@ -17,6 +18,7 @@ type User = {
 type AuthContextType = {
   user: User | null;
   signInWithGoogle: () => Promise<void>;
+  signOutGoogleAccount: () => Promise<void>;
   loadingUser: boolean;
 };
 
@@ -75,9 +77,16 @@ export function AuthContextProvider({ children }: AuthContextProviderType) {
     });
   }
 
+  async function signOutGoogleAccount() {
+    await signOut(auth);
+    setUser(null);
+  }
+
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{ user, signInWithGoogle, loadingUser }}>
+    <AuthContext.Provider
+      // eslint-disable-next-line react/jsx-no-constructed-context-values
+      value={{ user, signInWithGoogle, loadingUser, signOutGoogleAccount }}
+    >
       {children}
     </AuthContext.Provider>
   );

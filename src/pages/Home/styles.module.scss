@@ -7,7 +7,7 @@
   grid-template-columns: 1fr 1.2fr;
 
   @media screen and (max-width: rem(900)) {
-    min-height: 450px;
+    min-height: 500px;
     display: block;
   }
 
@@ -205,6 +205,17 @@
 
     &:hover {
       background-image: linear-gradient(139.44deg, rgba(72, 90, 255, 0.6) 0%, rgba(255, 89, 248, 0.6) 96.19%);
+    }
+  }
+
+  .logout {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    @media screen and (max-width: rem(900)) {
+      border-color: #fff;
+      color: #fff;
     }
   }
 }

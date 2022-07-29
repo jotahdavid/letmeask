@@ -17,7 +17,7 @@ import styles from './styles.module.scss';
 
 function Home() {
   const navigate = useNavigate();
-  const { user, signInWithGoogle } = useAuth();
+  const { user, signInWithGoogle, signOutGoogleAccount } = useAuth();
 
   const [roomCode, setRoomCode] = useState('');
   const [roomExists, setRoomExists] = useState(true);
@@ -27,6 +27,14 @@ function Home() {
       await signInWithGoogle();
     } catch (err) {
       toast.error('Falha na autenticação!');
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      await signOutGoogleAccount();
+    } catch (err) {
+      toast.error(`${err}`);
     }
   }
 
@@ -69,6 +77,15 @@ function Home() {
 
       <div className={styles.background}>
         <main className={styles.auth}>
+          {user && (
+            <Button
+              className={styles.logout}
+              outlined
+              handleClick={handleLogout}
+            >
+              Deslogar
+            </Button>
+          )}
           <section className={styles.authWrapper}>
             <img
               className={styles.logo}
