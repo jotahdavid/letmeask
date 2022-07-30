@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { push, ref } from 'firebase/database';
+import { push, ref, update } from 'firebase/database';
 import { database } from '@services/firebase';
 
 import { useAuth } from '@hooks/useAuth';
@@ -25,7 +25,7 @@ function NewRoom() {
   async function handleNewRoom(event: FormEvent) {
     event.preventDefault();
 
-    if (newRoom.trim() === '') return;
+    if (!user || newRoom.trim() === '') return;
 
     if (newRoom.length > 115) {
       toast.error('Nome de sala muito longo');
@@ -36,6 +36,14 @@ function NewRoom() {
     const roomId = await push(roomRef, {
       title: newRoom.trim(),
       authorId: user?.id,
+    });
+
+    const userRoomRef = await ref(
+      database,
+      `user/${user?.id}/rooms/${roomId.key}`
+    );
+    await update(userRoomRef, {
+      title: newRoom.trim(),
     });
 
     navigate(`/admin/rooms/${roomId.key?.slice(1)}`);

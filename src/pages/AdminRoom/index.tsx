@@ -94,7 +94,9 @@ function AdminRoom() {
   async function handleDeleteRoom(confirm: boolean) {
     if (!confirm) return;
 
+    await remove(ref(database, `user/${user?.id}/rooms/${roomId}`));
     await remove(ref(database, `rooms/${roomId}`));
+
     navigate('/');
   }
 

@@ -1,5 +1,5 @@
-import { FormEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
 import { get, ref } from 'firebase/database';
@@ -15,12 +15,52 @@ import googleIcon from '@assets/images/google-icon.svg';
 import logInIcon from '@assets/images/log-in.svg';
 import styles from './styles.module.scss';
 
+type FirebaseUserRooms = Record<
+  string,
+  {
+    title: string;
+  }
+> | null;
+
+type UserRoomType = {
+  id: string;
+  title: string;
+};
+
 function Home() {
   const navigate = useNavigate();
   const { user, signInWithGoogle, signOutGoogleAccount } = useAuth();
 
   const [roomCode, setRoomCode] = useState('');
   const [roomExists, setRoomExists] = useState(true);
+  const [userRooms, setUserRooms] = useState<UserRoomType[]>([]);
+
+  useEffect(() => {
+    if (!user) {
+      setUserRooms([]);
+      return;
+    }
+
+    async function getUserRooms() {
+      const userRoomsSnapshot = await get(
+        ref(database, `user/${user?.id}/rooms/`)
+      );
+      const userRoomsData =
+        (await userRoomsSnapshot.val()) as FirebaseUserRooms;
+
+      if (!userRoomsData) return;
+
+      const parsedUserRooms = Object.entries(userRoomsData).map(
+        ([roomId, { title }]) => ({
+          id: roomId,
+          title,
+        })
+      );
+
+      setUserRooms(parsedUserRooms);
+    }
+    getUserRooms();
+  }, [user]);
 
   async function handleLoginWithGoogle() {
     try {
@@ -133,6 +173,20 @@ function Home() {
                 Entrar na sala
               </Button>
             </form>
+            {userRooms.length > 0 && (
+              <article className={styles.roomsContainer}>
+                <h3 className={styles.roomsContainer__title}>Salas criadas</h3>
+                <ul className={styles.roomsList}>
+                  {userRooms.map((room) => (
+                    <li key={room.id} className={styles.roomsList__item}>
+                      <Link to={`/admin/rooms/${room.id.slice(1)}`}>
+                        {room.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            )}
           </section>
         </main>
       </div>

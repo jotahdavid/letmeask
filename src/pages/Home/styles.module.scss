@@ -7,7 +7,7 @@
   grid-template-columns: 1fr 1.2fr;
 
   @media screen and (max-width: rem(900)) {
-    min-height: 500px;
+    min-height: 680px;
     display: block;
   }
 
@@ -216,6 +216,94 @@
     @media screen and (max-width: rem(900)) {
       border-color: #fff;
       color: #fff;
+    }
+  }
+
+  .roomsContainer {
+    width: 100%;
+
+    &__title {
+      display: inline;
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 4px;
+        border-radius: 5px;
+
+        background-image: linear-gradient(139.44deg, #485BFF 0%, #FF59F8 96.19%);
+
+        position: absolute;
+        bottom: 0;
+      }
+    }
+  }
+}
+
+.roomsList {
+  width: 100%;
+  margin-top: 1rem;
+  max-height: 120px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #835AFD;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #5e3dc2;
+  }
+
+  &__item {
+    > a {
+      display: block;
+      width: 98%;
+      margin: 0 auto;
+      padding: 10px;
+
+      background-color: rgb(248, 248, 248);
+      box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.15);
+      outline: 2px dashed rgba(0, 0, 0, 0.15);
+      border-radius: 5px;
+
+      font-family: "Poppins", sans-serif;
+      font-weight: 400;
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.6);
+
+      transition: outline 300ms ease, color 300ms ease;
+    }
+
+    &:first-of-type > a {
+      margin-top: 2px;
+    }
+    & > a {
+      margin-bottom: 0.8rem;
+    }
+    &:last-of-type > a {
+      margin-bottom: 2px;
+    }
+
+    &:hover {
+      > a {
+        outline: 2px solid #835AFD;
+        color: #6e3eff;
+      }
     }
   }
 }
