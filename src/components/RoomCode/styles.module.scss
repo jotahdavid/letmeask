@@ -5,24 +5,29 @@
   background-color: #fff;
   border-radius: rem(8);
   border: 2px solid #835AFD;
-  overflow: hidden;
   cursor: pointer;
 
   height: rem(40);
   display: flex;
   align-items: center;
 
+  position: relative;
+
   transition: border-color 200ms ease;
 
   div {
-    height: 100%;
+    height: calc(100% + 2px);
+    width: calc(rem(40) + 2px);
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #835AFD;
     padding: 0 rem(12);
-
+    border-radius: rem(8) 0 0 rem(8);
     color: #29292E;
+
+    position: absolute;
+    left: 0 - 2px;
 
     transition: background-color 200ms ease;
   }
@@ -31,7 +36,7 @@
     border-color: #6F4BD8;
   }
   &:hover div {
-    background-color: #6F4BD8;;
+    background-color: #6F4BD8;
   }
 
   img {
@@ -44,6 +49,7 @@
     align-self: center;
     flex: 1;
     padding: 0 1rem;
+    margin-left: 35px;
 
     font-family: "Roboto", sans-serif;
     font-size: rem(14);
