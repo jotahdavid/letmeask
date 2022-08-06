@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { push, ref, update } from 'firebase/database';
+import { get, push, ref, update } from 'firebase/database';
 import { database } from '@services/firebase';
 
 import { useAuth } from '@hooks/useAuth';
@@ -29,6 +29,15 @@ function NewRoom() {
 
     if (newRoom.length > 115) {
       toast.error('Nome de sala muito longo');
+      return;
+    }
+
+    const userRoomsRef = await ref(database, `user/${user?.id}/rooms`);
+    const userRooms = await (await get(userRoomsRef)).val();
+
+    if (Object.keys(userRooms).length >= 5) {
+      toast.dismiss();
+      toast.error('Você só pode criar no máximo 5 salas!');
       return;
     }
 
