@@ -35,7 +35,7 @@ function NewRoom() {
     const userRoomsRef = await ref(database, `user/${user?.id}/rooms`);
     const userRooms = await (await get(userRoomsRef)).val();
 
-    if (Object.keys(userRooms).length >= 5) {
+    if (userRooms && Object.keys(userRooms).length >= 5) {
       toast.dismiss();
       toast.error('Você só pode criar no máximo 5 salas!');
       return;
